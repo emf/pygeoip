@@ -43,9 +43,6 @@ except ImportError:
 import pygeoip.const
 from pygeoip.util import ip2long
 from pygeoip.timezone import time_zone_by_country_and_region
-from platform import python_version_tuple
-PY3 = python_version_tuple()[0] == '3'
-
 
 MMAP_CACHE = const.MMAP_CACHE
 MEMORY_CACHE = const.MEMORY_CACHE
@@ -132,7 +129,7 @@ class GeoIP(GeoIPBase):
         for i in range(const.STRUCTURE_INFO_MAX_SIZE):
             delim = self._filehandle.read(3)
 
-            if (PY3 and delim == chr(255) * 3) or (not PY3 and delim == unicode(chr(255) * 3, "unicode_escape")):
+            if delim == chr(255) * 3:
                 self._databaseType = ord(self._filehandle.read(1))
 
                 if (self._databaseType >= 106):
