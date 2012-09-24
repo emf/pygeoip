@@ -42,6 +42,5 @@ setup(name='pygeoip',
                    'Programming Language :: Python :: 3.1',
                    'Programming Language :: Python :: 3.2'],
       packages=['pygeoip'],
-      install_requires=['six'],
       license='LGPL',
       keywords='geoip')
