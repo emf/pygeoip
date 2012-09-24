@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 
 from __future__ import with_statement, division
 import os
-import six
+#import six
 import math
 import socket
 import mmap
@@ -131,7 +131,7 @@ class GeoIP(GeoIPBase):
         for i in range(const.STRUCTURE_INFO_MAX_SIZE):
             delim = self._filehandle.read(3)
 
-            if delim == six.u(chr(255) * 3):
+            if delim == chr(255) * 3:
                 self._databaseType = ord(self._filehandle.read(1))
 
                 if (self._databaseType >= 106):
