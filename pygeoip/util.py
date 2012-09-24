@@ -20,7 +20,8 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 """
 
-#import six
+from platform import python_version_tuple
+PY3 = python_version_tuple()[0] == '3'
 
 def ip2long(ip):
     """
@@ -33,10 +34,10 @@ def ip2long(ip):
     """
     ip_array = ip.split('.')
     
-    #if six.PY3:
-    #    # int and long are unified in py3
-    #    ip_long = int(ip_array[0]) * 16777216 + int(ip_array[1]) * 65536 + int(ip_array[2]) * 256 + int(ip_array[3])
-    #else:
-    ip_long = long(ip_array[0]) * 16777216 + long(ip_array[1]) * 65536 + long(ip_array[2]) * 256 + long(ip_array[3])
+    if PY3:
+        # int and long are unified in py3
+        ip_long = int(ip_array[0]) * 16777216 + int(ip_array[1]) * 65536 + int(ip_array[2]) * 256 + int(ip_array[3])
+    else:
+        ip_long = long(ip_array[0]) * 16777216 + long(ip_array[1]) * 65536 + long(ip_array[2]) * 256 + long(ip_array[3])
     return ip_long  
 

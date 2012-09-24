@@ -29,7 +29,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 
 from __future__ import with_statement, division
 import os
-#import six
 import math
 import socket
 import mmap
@@ -44,6 +43,8 @@ except ImportError:
 import pygeoip.const
 from pygeoip.util import ip2long
 from pygeoip.timezone import time_zone_by_country_and_region
+from platform import python_version_tuple
+PY3 = python_version_tuple()[0] == '3'
 
 
 MMAP_CACHE = const.MMAP_CACHE
@@ -131,7 +132,7 @@ class GeoIP(GeoIPBase):
         for i in range(const.STRUCTURE_INFO_MAX_SIZE):
             delim = self._filehandle.read(3)
 
-            if delim == chr(255) * 3:
+            if (PY3 and delim == chr(255) * 3) or (not PY3 and delim == unicode(chr(255) * 3, "unicode_escape")):
                 self._databaseType = ord(self._filehandle.read(1))
 
                 if (self._databaseType >= 106):
@@ -332,7 +333,6 @@ class GeoIP(GeoIPBase):
 
         record_buf_pos = 0
         char = ord(record_buf[record_buf_pos])
-        #char = record_buf[record_buf_pos] if six.PY3 else ord(record_buf[record_buf_pos])
         record['country_code'] = const.COUNTRY_CODES[char]
         record['country_code3'] = const.COUNTRY_CODES3[char]
         record['country_name'] = const.COUNTRY_NAMES[char]
